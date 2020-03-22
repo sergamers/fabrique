@@ -1,23 +1,28 @@
 <template>
-  <div>
-    <div>Тип карты лояльности <br /><br /></div>
+  <div class="ExtraCondition">
 
-    <div v-for="(type, index) in types" :key="type.idEl">
-      <select v-model="type.data.type">
-        <option :value="null"></option>
-        <option value="gold">Gold</option>
-        <option value="silver">Silver</option>
-        <option value="black">Black</option>
-      </select>
+    <div class="ExtraCondition-content">
+      <div class="ExtraCondition-range" v-for="(type, index) in types" :key="type.idEl">
+        <div class="ExtraCondition-titleWrapper">
+          <div class="ExtraCondition-or" v-if="(index >= 1)">ИЛИ</div>
+          <div class="ExtraCondition-title">Тип {{index + 1}}</div>
 
-      <button v-if="types.length > 1" @click="deleteType(index)">
-        Удалить тип
-      </button>
+        </div>
+
+        <select class="ExtraCondition-select" v-model="type.data.type">
+          <option :value="null"></option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="black">Black</option>
+        </select>
+
+        <button class="ExtraCondition-button ExtraCondition-button--red ExtraCondition-delete" v-if="types.length > 1" @click="deleteType(index)">
+          X
+        </button>
+      </div>
     </div>
 
-    <br /><br />
-
-    <button @click="addType()">Добавить тип</button>
+    <button class="ExtraCondition-button ExtraCondition-button--green ExtraCondition-add" @click="addType()">+ Добавить тип</button>
   </div>
 </template>
 
@@ -47,3 +52,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@/styles/components/ages-condition.scss"></style>

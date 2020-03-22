@@ -1,23 +1,27 @@
 <template>
-  <div>
-    <div>Статус карты лояльности <br /><br /></div>
+  <div class="ExtraCondition">
 
-    <div v-for="(status, index) in statuses" :key="status.idEl">
-      <select v-model="status.data.status">
-        <option :value="null"></option>
-        <option value="active">Активна</option>
-        <option value="disabled">Заблокированна</option>
-        <option value="inProcess">В обработке</option>
-      </select>
+    <div class="ExtraCondition-content">
+      <div class="ExtraCondition-range" v-for="(status, index) in statuses" :key="status.idEl">
+        <div class="ExtraCondition-titleWrapper">
+          <div class="ExtraCondition-or" v-if="(index >= 1)">ИЛИ</div>
+          <div class="ExtraCondition-title">Статус {{index + 1}}</div>
+        </div>
 
-      <button v-if="statuses.length > 1" @click="deleteStatus(index)">
-        Удалить статус
-      </button>
+        <select class="ExtraCondition-select" v-model="status.data.status">
+          <option :value="null"></option>
+          <option value="active">Активна</option>
+          <option value="disabled">Заблокированна</option>
+          <option value="inProcess">В обработке</option>
+        </select>
+
+        <button class="ExtraCondition-button ExtraCondition-button--red ExtraCondition-delete" v-if="statuses.length > 1" @click="deleteStatus(index)">
+          X
+        </button>
+      </div>
     </div>
 
-    <br /><br />
-
-    <button @click="addStatus()">Добавить статус</button>
+    <button class="ExtraCondition-button ExtraCondition-button--green ExtraCondition-add" @click="addStatus()">+ Добавить статус</button>
   </div>
 </template>
 
@@ -47,3 +51,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@/styles/components/ages-condition.scss"></style>

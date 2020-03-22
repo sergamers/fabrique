@@ -1,9 +1,14 @@
 <template>
   <div class="Form">
     <div
-      class="Form-conditionBlock"
+      class="Form-conditionContent"
       :key="condition.idEl"
       v-for="(condition, index) of conditions"
+      v-bind:class="[
+      { 'Form-conditionContent--status': conditions[index].type === 'status' },
+      { 'Form-conditionContent--type': conditions[index].type === 'type' },
+      { 'Form-conditionContent--ages': conditions[index].type === 'ages' }
+      ]"
     >
       <ChooseCondition
         @onDelete="deleteCondition(index)"
@@ -11,24 +16,30 @@
         @createForm="setConditionData(index, $event)"
         :conditionNumber="index + 1"
       />
-      <br /><br />
     </div>
 
-    <div>
-      Нажмите, чтобы добавить новое условие
-      <button @click="addCondition()">+</button>
+    <button class="Form-button Form-button--add Form-addCondition" @click="addCondition()">
+        +
+      <span>
+        Нажмите, чтобы добавить новое условие выборки. 
+        Все условия связываются между собой логическим "И"
+      </span>
+    </button>
+
+    <button class="Form-button Form-button--green Form-test" @click="getForm()">Протестировать опрос</button>
+    
+    <div
+     class="Form-testContent"
+     v-if="result"
+     >
+      <pre>{{ result }}</pre>
     </div>
-
-    <br /><br />
-
-    <button @click="getForm()">Далее</button>
-
-    <br /><br />
-    <pre>{{ result }}</pre>
   </div>
 </template>
 
+
 <script>
+
 import ChooseCondition from "@/components/ChooseCondition.vue";
 
 export default {
@@ -57,6 +68,7 @@ export default {
     /** Установить тип условия */
     setConditionType: function(index, type) {
       this.conditions[index].type = type;
+      this.$forceUpdate();
     },
     /** Получить сформированную форму */
     getForm: function() {
@@ -128,3 +140,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@/styles/views/home.scss"></style>

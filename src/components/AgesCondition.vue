@@ -1,21 +1,22 @@
 <template>
-  <div>
-    <div>Возраст респондента <br /><br /></div>
+  <div class="ExtraCondition">
+    <div class="ExtraCondition-content">
+      <div class="ExtraCondition-range" v-for="(range, index) in ranges" :key="range.idEl">
+        <div class="ExtraCondition-titleWrapper">
+          <div class="ExtraCondition-or" v-if="(index >= 1)">ИЛИ</div>
+          <div class="ExtraCondition-title">Диапазон {{index + 1}}</div>
+        </div>
 
-    <div v-for="(range, index) in ranges" :key="range.idEl">
-      <div>
-        от <input type="text" v-model="range.data.from" /> до
-        <input type="text" v-model="range.data.to" />
+        от <input class="ExtraCondition-input ExtraCondition-input--small" type="text" v-model="range.data.from" /> до
+        <input class="ExtraCondition-input ExtraCondition-input--small" type="text" v-model="range.data.to" />
 
-        <button v-if="ranges.length > 1" @click="deleteRange(index)">
-          Удалить диапазон
+        <button class="ExtraCondition-button ExtraCondition-button--red ExtraCondition-delete" v-if="ranges.length > 1" @click="deleteRange(index)">
+          X
         </button>
       </div>
     </div>
 
-    <br /><br />
-
-    <button @click="addRange()">Добавить диапазон</button>
+    <button class="ExtraCondition-button ExtraCondition-button--green ExtraCondition-add" @click="addRange()">+ Добавить диапазон</button>
   </div>
 </template>
 
@@ -46,3 +47,5 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" src="@/styles/components/ages-condition.scss"></style>
